@@ -1,405 +1,373 @@
-# CV-RAG Hiring Assistant
+# 🤖 Enterprise AI HR Recruitment Assistant
 
-AI system for evaluating job candidates using **Retrieval-Augmented Generation (RAG)**.
-
-The application analyzes multiple CVs, retrieves relevant evidence from them, and produces structured hiring recommendations using a large language model.
-
-The goal of the system is to simulate the reasoning process of a **strict HR recruitment specialist**, ensuring that decisions are based only on explicit information found in the resumes.
+An AI-powered recruitment platform that automates candidate screening, ranking, evaluation, and HR question answering using **Large Language Models (LLMs)** and **Retrieval-Augmented Generation (RAG)**.
 
 ---
 
-# Project Overview
+## 📷 Home Page
 
-This project demonstrates how modern **RAG pipelines** can be used to build intelligent systems that reason over documents.
-
-The system allows an HR user to upload multiple CVs and ask questions such as:
-
-* Which candidate is best suited for an AI Engineer role?
-* Compare candidates for a Machine Learning position.
-* Which candidate has the strongest experience with RAG systems?
-
-Instead of relying on keyword matching alone, the system retrieves relevant context from the CVs and sends that information to an LLM to produce a reasoned answer supported by evidence.
+> 📌 ****
+>
+> (Application Header + CV Upload + Job Description + Analyze Candidates Button)
 
 ---
 
-# Core Concepts Implemented
+# 📖 Overview
 
-The project demonstrates several advanced RAG techniques commonly used in production AI systems.
+Recruiters often spend hours reviewing hundreds of CVs manually.
 
-These include:
+This project automates the recruitment process by allowing HR teams to:
 
-* Multiple retrieval strategies
-* Hybrid search
-* Adaptive retrieval
-* Document-aware chunking
-* Prompt injection protection
-* Evidence-based reasoning
+- Upload multiple candidate CVs.
+- Analyze Job Descriptions automatically.
+- Extract structured candidate information using LLMs.
+- Rank candidates using an explainable scoring engine.
+- Generate AI-powered hiring evaluations.
+- Ask natural language questions about candidates using a RAG-based chatbot.
 
----
-
-# Retrieval Strategies Implemented
-
-The system supports **four different RAG retrieval approaches**.
-The user can choose between them from the Streamlit sidebar.
-
-## 1. Multi Query Retrieval
-
-Multi Query retrieval improves recall by generating several alternative search queries.
-
-Instead of retrieving documents using the original question only, the system asks the language model to rewrite the query into multiple variations.
-
-Example:
-
-Original question:
-
-```
-Which candidate is best for an AI engineer role?
-```
-
-Generated queries might be:
-
-```
-AI engineer experience
-machine learning engineer skills
-deep learning engineer background
-```
-
-Each query retrieves relevant chunks, and all results are combined before sending them to the model.
-
-This approach helps retrieve documents that might not match the exact wording of the original question.
+Instead of manually reviewing resumes, recruiters receive an explainable and transparent hiring recommendation within seconds.
 
 ---
 
-## 2. Hybrid RAG (Semantic + Keyword Retrieval)
+# ✨ Features
 
-Hybrid retrieval combines two different search techniques.
+## 📄 CV Processing
+
+- Upload multiple PDF resumes
+- Automatic CV parsing using LLMs
+- Candidate profile extraction
+- Skills extraction
+- Experience extraction
+- Education extraction
+- Projects extraction
+- Certification extraction
+
+---
+
+## 💼 Job Description Analysis
+
+The system automatically analyzes the Job Description and extracts:
+
+- Required Skills
+- Minimum Experience
+- Education Requirements
+- Certifications
+
+---
+
+## 🎯 Candidate Ranking Engine
+
+Candidates are evaluated using a weighted scoring system.
+
+| Category | Weight |
+|----------|--------|
+| Skills | 50% |
+| Experience | 20% |
+| Education | 10% |
+| Projects | 15% |
+| Certifications | 5% |
+
+Each candidate receives:
+
+- Final Score
+- Matched Skills
+- Missing Skills
+- Hiring Recommendation
+
+---
+
+## 📊 Explainable AI
+
+Instead of returning only a score, the system explains:
+
+- Why the candidate received this score
+- Matched Skills
+- Missing Skills
+- Score Breakdown
+- Recommendation
+
+---
+
+## 📷 HR Dashboard
+
+> 📌 **Insert Screenshot #2 Here**
+>
+> (Dashboard Metrics + Charts)
+
+The dashboard includes:
+
+- Candidate Statistics
+- Hiring Recommendation Distribution
+- Candidate Ranking
+- Interactive Charts
+- CSV Export
+
+---
+
+## 👤 Candidate Details
+
+Each candidate profile contains:
+
+- Personal Information
+- Experience
+- Education
+- Skills
+- Certifications
+- Projects
+- Score Breakdown
+- Recommendation
+
+---
+
+## 📷 Candidate Details
+
+> 📌 **Insert Screenshot #3 Here**
+>
+> (Score Breakdown + Skills + Projects)
+
+---
+
+# 🤖 AI Candidate Evaluation
+
+The recruiter can request an AI evaluation for every candidate.
+
+The LLM generates:
+
+- Overall Assessment
+- Technical Fit
+- Score Explanation
+- Strengths
+- Weaknesses
+- Interview Questions
+- Final Recommendation
+
+This combines deterministic scoring with LLM reasoning.
+
+---
+
+# 🧠 Enterprise AI HR Chat (RAG)
+
+The application provides an AI HR Assistant capable of answering recruiter questions directly from uploaded CVs.
+
+Example Questions:
+
+- Which candidate has the strongest Machine Learning background?
+- Compare candidates with FastAPI experience.
+- Who has AWS certification?
+- Which candidate worked on RAG projects?
+- Which candidate has Computer Vision experience?
+
+The assistant answers **only using retrieved information from the uploaded resumes.**
+
+---
+
+## 📷 AI HR Chat
+
+> 📌 **Insert Screenshot #4 Here**
+>
+> (Question + Answer + Sources)
+
+---
+
+# 🔍 RAG Pipeline
+
+The chatbot follows a Retrieval-Augmented Generation pipeline.
+
+```
+PDF Files
+      │
+      ▼
+Document Loader
+      │
+      ▼
+Recursive Chunking
+      │
+      ▼
+HuggingFace Embeddings
+      │
+      ▼
+Chroma Vector Database
+      │
+      ▼
+Hybrid Retrieval
+(Semantic + BM25)
+      │
+      ▼
+Context Construction
+      │
+      ▼
+Llama 3.3 (Groq)
+      │
+      ▼
+Grounded Answer
+      │
+      ▼
+Sources
+```
+
+---
+
+# 🔎 Hybrid Search
+
+To improve retrieval quality, the project combines two retrieval methods.
 
 ### Semantic Search
 
-Semantic search uses **vector embeddings** to capture the meaning of text.
-
-The system converts each document chunk into a numerical vector using a transformer model:
-
-```
-sentence-transformers/all-MiniLM-L6-v2
-```
-
-The vectors are stored in **ChromaDB**, which allows similarity search.
-
-When a query is asked, the system finds the chunks with the most similar semantic meaning.
-
----
+Uses HuggingFace embeddings stored inside ChromaDB to retrieve semantically similar CV chunks.
 
 ### Keyword Search
 
-Keyword search is implemented using **BM25 retrieval**.
+Uses BM25 retrieval to capture exact keyword matches.
 
-BM25 is a classical information retrieval algorithm used in search engines.
-
-It works by matching exact words and ranking documents based on term frequency and document length.
+The final retrieved context is a combination of both approaches.
 
 ---
 
-### Why Hybrid Retrieval?
+# 📂 Chunking Strategy
 
-Semantic search is good at understanding meaning but sometimes misses exact keywords.
+Current implementation:
 
-Keyword search captures exact terms but cannot understand context.
+- Recursive Character Text Splitter
 
-By combining both:
+Configuration:
 
-```
-semantic results + keyword results
-```
+- Chunk Size: **1000**
+- Chunk Overlap: **200**
 
-the system retrieves a more complete set of relevant documents.
-
----
-
-## 3. Adaptive RAG (Relative Threshold)
-
-Adaptive retrieval dynamically decides how many chunks to use.
-
-The system retrieves many candidate chunks and calculates their similarity scores.
-
-Then it observes how the scores change.
-
-If the similarity score suddenly drops significantly, the system assumes that the remaining chunks are no longer relevant.
-
-Retrieval stops automatically at that point.
-
-This prevents irrelevant information from being sent to the LLM.
+This preserves context while reducing information loss.
 
 ---
 
-## 4. Adaptive RAG (Biggest Jump)
+# ⚡ LLM Caching
 
-This strategy also analyzes similarity scores.
+To reduce latency and API costs, the project caches LLM responses.
 
-Instead of using an average threshold, it identifies the **largest gap between consecutive similarity scores**.
+Cached operations include:
 
-Example score distribution:
+- Candidate Profile Extraction
+- AI Candidate Evaluation
 
-```
-0.92
-0.90
-0.88
-0.87
-0.40
-0.39
-```
+Benefits:
 
-There is a large gap between **0.87 and 0.40**.
-
-The system keeps only the chunks above that gap.
-
-This helps isolate the most relevant pieces of information.
+- Faster execution
+- Lower API cost
+- Reduced token consumption
 
 ---
 
-# Document Chunking Strategies
-
-Before retrieval can happen, documents must be divided into smaller pieces called **chunks**.
-
-The project implements **two chunking strategies**.
-
-Users can choose between them in the Streamlit interface.
-
----
-
-## 1. Recursive Character Chunking
-
-This method splits text based on a hierarchy of separators.
-
-The splitting order typically follows:
+# 🏗️ Project Architecture
 
 ```
-paragraphs
-lines
-spaces
-```
-
-Chunk parameters used in this project:
-
-```
-chunk_size = 1000 characters
-chunk_overlap = 150 characters
-```
-
-Overlap ensures that important context is not lost between chunks.
-
-This method is fast and works well for most documents.
-
----
-
-## 2. Document-Aware Structural Chunking
-
-This strategy uses the **Unstructured library** to parse the PDF.
-
-Instead of splitting blindly by characters, the system identifies document elements such as:
-
-* Titles
-* Headers
-* Paragraphs
-* List items
-* Sections
-
-Each structural element becomes a chunk.
-
-Example elements detected in CVs:
-
-```
-Experience
-Projects
-Education
-Skills
-Certifications
-```
-
-This preserves the logical structure of the document and improves retrieval quality.
-
----
-
-# System Architecture
-
-```
-User Question
-        ↓
-Query Processing
-        ↓
-Retrieval Layer
-    ├─ Semantic Search (ChromaDB + Embeddings)
-    └─ Keyword Search (BM25)
-        ↓
-Hybrid Retrieval
-        ↓
-Context Construction
-        ↓
-Large Language Model
-(Llama 3.3 via Groq API)
-        ↓
-Structured HR Evaluation
-        ↓
-Evidence Display
+Upload CVs
+        │
+        ▼
+PDF Loader
+        │
+        ▼
+LLM Candidate Extraction
+        │
+        ▼
+Job Description Parsing
+        │
+        ▼
+Semantic Skill Matching
+        │
+        ▼
+Weighted Scoring Engine
+        │
+        ▼
+Candidate Ranking
+        │
+        ├────────► HR Dashboard
+        │
+        ├────────► AI Evaluation
+        │
+        ▼
+RAG Knowledge Base
+        │
+        ▼
+Enterprise HR Chat Assistant
 ```
 
 ---
 
-# Streamlit Interface
+# 🛠 Technology Stack
 
-The system includes an interactive interface built with **Streamlit**.
-
-The interface is divided into two main sections.
+- Python
+- Streamlit
+- LangChain
+- Groq API
+- Llama 3.3
+- ChromaDB
+- HuggingFace Embeddings
+- BM25 Retrieval
+- Plotly
+- Pandas
 
 ---
 
-## Sidebar
-
-The sidebar allows the user to configure the system.
-
-The user can:
-
-* Upload exactly **five CV files**
-* Select the **retrieval strategy**
-* Select the **chunking strategy**
-
-Available retrieval options:
+# 📁 Project Structure
 
 ```
-Multi Query
-Hybrid RAG
-Adaptive RAG (Relative Threshold)
-Adaptive RAG (Biggest Jump)
-```
-
-Available chunking options:
-
-```
-Recursive Chunking
-Document Aware Chunking
+CV-RAG-Hiring-Assistant
+│
+├── app.py
+├── rag/
+├── utils/
+├── cache/
+├── data/
+├── requirements.txt
+├── README.md
+└── .env.example
 ```
 
 ---
 
-## Chat Interface
+# 🚀 Installation
 
-The main interface behaves like a chat assistant.
+Clone the repository
 
-The HR user can ask questions such as:
-
-```
-Which candidate is the best AI engineer?
-Compare the candidates for a data scientist role.
-Which candidate has RAG experience?
+```bash
+git clone https://github.com/your-username/CV-RAG-Hiring-Assistant.git
 ```
 
-The system responds with three sections.
+Install dependencies
 
----
-
-### Quick Answer
-
-A short summary of the hiring recommendation.
-
----
-
-### Detailed Analysis
-
-The system explains its reasoning using only retrieved CV information.
-
-If the user asks for comparison, the system generates a structured table.
-
-Example:
-
-```
-| Candidate | Strengths | Missing Skills | Verdict |
-```
-
----
-
-### Final Conclusion
-
-A final hiring recommendation based on the analysis.
-
----
-
-### Evidence Section
-
-Below the answer, the system shows the **actual CV text used as evidence**.
-
-Each piece of evidence is grouped by candidate and displayed inside expandable sections.
-
-This ensures transparency and allows the HR user to verify the reasoning.
-
----
-
-# Security
-
-The system includes **prompt injection detection**.
-
-Certain malicious instructions are blocked, such as:
-
-* ignore previous instructions
-* bypass rules
-* output unrelated content
-
-If such patterns are detected, the assistant refuses the request.
-
----
-
-# Technology Stack
-
-Python
-Streamlit
-LangChain
-ChromaDB
-Sentence Transformers
-BM25 Retrieval
-Groq API
-Llama 3.3
-
----
-
-# Installation
-
-Clone the repository:
-
-```
-git clone https://github.com/EbraamNabil/CV-RAG-Hiring-Assistant.git
-```
-
-Enter the project directory:
-
-```
-cd CV-RAG-Hiring-Assistant
-```
-
-Install dependencies:
-
-```
+```bash
 pip install -r requirements.txt
 ```
 
-Create environment variables:
+Create `.env`
 
-```
-GROQ_API_KEY=your_api_key_here
+```text
+GROQ_API_KEY=YOUR_API_KEY
 ```
 
-Run the application:
+Run the application
 
-```
-streamlit run app2.py
+```bash
+streamlit run app.py
 ```
 
 ---
 
-# Future Improvements
+# 🚀 Future Improvements
 
-Possible extensions for the system include:
+- Cross-Encoder Re-ranking
+- Adaptive RAG
+- Multi-Query Retrieval
+- Document-Aware Chunking
+- ATS Integration
+- Authentication & Authorization
+- Cloud Deployment (AWS / Azure)
+- Email Integration
+- Interview Scheduling
+- Candidate Database
 
-* Cross-encoder reranking
-* Candidate scoring
-* automatic shortlist generation
-* support for larger document collections
-* ATS integration
+---
+
+# 👨‍💻 Author
+
+**Ebraam Nabil**
+
+AI Engineer
