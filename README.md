@@ -334,7 +334,7 @@ CV-RAG-Hiring-Assistant
 ├── utils/
 ├── cache/
 ├── data/
-|── assets/
+|──
 ├── requirements.txt
 ├── README.md
 └── .env.example
